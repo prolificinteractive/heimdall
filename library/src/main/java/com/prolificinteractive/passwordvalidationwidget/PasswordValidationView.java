@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 public class PasswordValidationView extends LinearLayout
     implements PasswordCallbackTextWatcher.Callback {
 
+  private static final String TAG = PasswordValidationView.class.getSimpleName();
+
   private RecyclerView recyclerView;
   private TextInputLayout passwordTil;
   private EditText passwordText;
@@ -84,12 +86,12 @@ public class PasswordValidationView extends LinearLayout
   }
 
   @Override public void onMatch(Pattern pattern) {
-    Log.d("ValidationChecksAdapter", "Got Match! for pattern: " + pattern.toString());
+    Log.d(TAG, "Got Match! for pattern: " + pattern.toString());
     adapter.setMatch(pattern);
   }
 
   @Override public void noMatch(Pattern pattern) {
-    Log.d("ValidationChecksAdapter", "No Match! for pattern: " + pattern.toString());
+    Log.d(TAG, "No Match! for pattern: " + pattern.toString());
     adapter.setNoMatch(pattern);
   }
 }
