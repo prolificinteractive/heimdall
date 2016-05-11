@@ -1,4 +1,4 @@
-package com.prolificinteractive.materialtabselector;
+package com.prolificinteractive.passwordvalidationwidget;
 
 import org.junit.Test;
 
