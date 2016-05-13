@@ -1,4 +1,4 @@
-package com.prolificinteractive.passwordvalidationwidget;
+package com.prolificinteractive.passwordvalidationwidget.sample;
 
 import java.util.regex.Pattern;
 

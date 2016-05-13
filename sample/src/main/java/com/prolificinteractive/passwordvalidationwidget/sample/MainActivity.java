@@ -3,7 +3,6 @@ package com.prolificinteractive.passwordvalidationwidget.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import com.prolificinteractive.passwordvalidationwidget.PasswordRegexes;
 import com.prolificinteractive.passwordvalidationwidget.PasswordValidationView;
 import com.prolificinteractive.passwordvalidationwidget.ValidationCheck;
 
