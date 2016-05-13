@@ -11,12 +11,13 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.CallbackForPattern;
+import com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.ValidationCallback;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class PasswordValidationView extends LinearLayout
-    implements PasswordCallbackTextWatcher.Callback {
+    implements CallbackForPattern, ValidationCallback {
 
   private static final String TAG = PasswordValidationView.class.getSimpleName();
 
@@ -72,7 +73,7 @@ public class PasswordValidationView extends LinearLayout
 
     // initialize our callback listener for password field
     passwordCallbackTextWatcher =
-        new PasswordCallbackTextWatcher(passwordText);
+        new PasswordCallbackTextWatcher(passwordText, this);
   }
 
   public void setupValidation(ValidationCheck... fields) {
@@ -85,13 +86,17 @@ public class PasswordValidationView extends LinearLayout
     passwordText.addTextChangedListener(passwordCallbackTextWatcher);
   }
 
-  @Override public void onMatch(Pattern pattern) {
-    Log.d(TAG, "Got Match! for pattern: " + pattern.toString());
-    adapter.setMatch(pattern);
+  @Override public void onMatch(ValidationCheck check) {
+    Log.d(TAG, "Got Match! for check: " + check.toString());
+    adapter.setMatch(check);
   }
 
-  @Override public void noMatch(Pattern pattern) {
-    Log.d(TAG, "No Match! for pattern: " + pattern.toString());
-    adapter.setNoMatch(pattern);
+  @Override public void noMatch(ValidationCheck check) {
+    Log.d(TAG, "No Match! for check: " + check.toString());
+    adapter.setNoMatch(check);
+  }
+
+  @Override public void onChecksCompleted() {
+    adapter.notifyDataSetChanged();
   }
 }

@@ -21,12 +21,10 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A {@link android.text.TextWatcher} that calls the matching
- * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.Callback}
+ * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.CallbackForPattern}
  * when the text at the selectionStart of the {@link android.widget.EditText} matches one
  * of the {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.PatternCallback}s
  */
@@ -35,6 +33,7 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
   private final EditText editText;
   private int cursorPosition;
 
+  private ValidationCallback validationCallback;
   private List<PatternCallback> patternCallbacks = new ArrayList<>();
 
   /**
@@ -43,8 +42,9 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
    * {@link android.widget.EditText#addTextChangedListener} the returned object to the
    * {@link android.widget.EditText}.
    */
-  public PasswordCallbackTextWatcher(EditText editText) {
+  public PasswordCallbackTextWatcher(EditText editText, ValidationCallback callback) {
     this.editText = editText;
+    this.validationCallback = callback;
   }
 
   /**
@@ -69,41 +69,40 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
 
   @Override public void afterTextChanged(Editable s) {
     for (PatternCallback patternCallback : patternCallbacks) {
-      Matcher matcher = patternCallback.pattern.matcher(s);
-      int matches = 0;
-      while (matcher.find()) {
-        if (matcher.start() <= cursorPosition && matcher.end() >= cursorPosition) {
-          matches++;
-          patternCallback.callback.onMatch(patternCallback.pattern);
-        }
-      }
-      if (matches == 0) {
-        patternCallback.callback.noMatch(patternCallback.pattern);
+      if (s.toString().matches(patternCallback.check.regexPattern.pattern())) {
+        patternCallback.callback.onMatch(patternCallback.check);
+      } else {
+        patternCallback.callback.noMatch(patternCallback.check);
       }
     }
+    validationCallback.onChecksCompleted();
   }
 
   /**
    * When the text at the cursor matches, <code>onMatch</code> is called. If there are no matches
    * then noMatch is called
    */
-  public interface Callback {
-    void onMatch(Pattern pattern);
+  public interface CallbackForPattern {
+    void onMatch(ValidationCheck check);
 
-    void noMatch(Pattern pattern);
+    void noMatch(ValidationCheck check);
   }
 
   /**
    * Associate a {@link java.util.regex.Pattern} with a
-   * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.Callback}.
+   * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.CallbackForPattern}.
    */
   public static class PatternCallback {
-    public Pattern pattern;
-    public Callback callback;
+    public ValidationCheck check;
+    public CallbackForPattern callback;
 
-    public PatternCallback(ValidationCheck field, Callback callback) {
-      this.pattern = field.regexPattern;
+    public PatternCallback(ValidationCheck check, CallbackForPattern callback) {
+      this.check = check;
       this.callback = callback;
     }
+  }
+
+  public interface ValidationCallback {
+    void onChecksCompleted();
   }
 }

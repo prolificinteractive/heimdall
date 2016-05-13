@@ -1,16 +1,18 @@
 package com.prolificinteractive.passwordvalidationwidget;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class ValidationChecksAdapter
     extends RecyclerView.Adapter<ValidationChecksAdapter.ViewHolder> {
+
+  private static final String TAG = ValidationChecksAdapter.class.getSimpleName();
 
   private final List<ValidationCheck> items = new ArrayList<>();
 
@@ -43,28 +45,18 @@ public class ValidationChecksAdapter
     notifyDataSetChanged();
   }
 
-  public void setMatch(final Pattern pattern) {
-    // TODO optimize
-    for (int i = 0; i < items.size(); i++) {
-      final ValidationCheck check = items.get(i);
-      if (pattern.equals(check.regexPattern)) {
-        check.setMatched(true);
-        notifyDataSetChanged();
-        break;
-      }
-    }
+  public void setMatch(final ValidationCheck check) {
+    final int matchedIndex = items.indexOf(check);
+    Log.d(TAG, "index for match: " + matchedIndex);
+    final ValidationCheck matched = items.get(matchedIndex);
+    matched.setMatched(true);
   }
 
-  public void setNoMatch(final Pattern pattern) {
-    // TODO optimize
-    for (int i = 0; i < items.size(); i++) {
-      final ValidationCheck check = items.get(i);
-      if (pattern.equals(check.regexPattern)) {
-        check.setMatched(false);
-        notifyDataSetChanged();
-        break;
-      }
-    }
+  public void setNoMatch(final ValidationCheck check) {
+    final int unmatchedIndex = items.indexOf(check);
+    Log.d(TAG, "index for no match: " + unmatchedIndex);
+    final ValidationCheck unmatched = items.get(unmatchedIndex);
+    unmatched.setMatched(false);
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
