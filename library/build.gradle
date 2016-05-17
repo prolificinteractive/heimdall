@@ -34,6 +34,8 @@ signing {
   sign configurations.archives
 }
 
+def LIBRARY_NAME = "Password Validation View"
+
 def getReleaseRepositoryUrl() {
   return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
       : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
@@ -104,7 +106,7 @@ uploadArchives {
 
 android.libraryVariants.all { variant ->
   task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
-    title "Swipe Action Layout${version}"
+    title LIBRARY_NAME+"${version}"
     description "Generates Javadoc for $variant.name."
     source = variant.javaCompile.source
     classpath = files(variant.javaCompile.classpath.files, project.android.getBootClasspath())
