@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,8 +19,6 @@ import java.util.List;
 
 public class PasswordValidationView extends LinearLayout
     implements CallbackForPattern, ValidationCallback {
-
-  private static final String TAG = PasswordValidationView.class.getSimpleName();
 
   // attribute fields
   private String headerTextString;
@@ -136,12 +133,10 @@ public class PasswordValidationView extends LinearLayout
   }
 
   @Override public void onMatch(ValidationCheck check) {
-    Log.d(TAG, "Got Match! for check: " + check.toString());
     adapter.setMatch(check);
   }
 
   @Override public void noMatch(ValidationCheck check) {
-    Log.d(TAG, "No Match! for check: " + check.toString());
     adapter.setNoMatch(check);
   }
 

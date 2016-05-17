@@ -3,7 +3,6 @@ package com.prolificinteractive.heimdall;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import java.util.List;
 
 public class ValidationChecksAdapter
     extends RecyclerView.Adapter<ValidationChecksAdapter.ViewHolder> {
-
-  private static final String TAG = ValidationChecksAdapter.class.getSimpleName();
 
   private final List<ValidationCheck> items = new ArrayList<>();
 
@@ -72,14 +69,12 @@ public class ValidationChecksAdapter
 
   public void setMatch(final ValidationCheck check) {
     final int matchedIndex = items.indexOf(check);
-    Log.d(TAG, "index for match: " + matchedIndex);
     final ValidationCheck matched = items.get(matchedIndex);
     matched.setMatched(true);
   }
 
   public void setNoMatch(final ValidationCheck check) {
     final int unmatchedIndex = items.indexOf(check);
-    Log.d(TAG, "index for no match: " + unmatchedIndex);
     final ValidationCheck unmatched = items.get(unmatchedIndex);
     unmatched.setMatched(false);
   }
