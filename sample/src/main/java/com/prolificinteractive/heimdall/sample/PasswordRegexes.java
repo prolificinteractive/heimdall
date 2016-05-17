@@ -1,4 +1,4 @@
-package com.prolificinteractive.passwordvalidationwidget.sample;
+package com.prolificinteractive.heimdall.sample;
 
 import java.util.regex.Pattern;
 

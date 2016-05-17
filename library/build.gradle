@@ -34,7 +34,7 @@ signing {
   sign configurations.archives
 }
 
-def LIBRARY_NAME = "Password Validation View"
+def LIBRARY_NAME = "Heimdall"
 
 def getReleaseRepositoryUrl() {
   return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL

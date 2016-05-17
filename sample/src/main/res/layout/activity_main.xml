@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     >
@@ -16,10 +17,38 @@
       app:titleTextColor="#fff"
       />
 
-  <com.prolificinteractive.passwordvalidationwidget.PasswordValidationView
+  <android.support.design.widget.TextInputLayout
+      android:id="@+id/password_til"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="8dp"
+      >
+    <EditText
+        android:id="@+id/password_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        />
+  </android.support.design.widget.TextInputLayout>
+  <com.prolificinteractive.heimdall.PasswordValidationView
       android:id="@+id/password_validation_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="8dp"
+      android:visibility="gone"
+      app:pvv_editTextId="@id/password_text"
+      app:pvv_headerText="@string/password_must_include"
+      app:pvv_headerTextAppearance="@style/CustomHeaderTextAppearance"
+      app:pvv_itemDrawableMatch="@drawable/ic_check_black_24dp"
+      app:pvv_itemDrawableNoMatch="@drawable/ic_close_black_24dp"
+      app:pvv_itemTextAppearance="@style/CustomItemTextAppearance"
+      >
+  </com.prolificinteractive.heimdall.PasswordValidationView>
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      android:text="Test Button"
       />
 </LinearLayout>

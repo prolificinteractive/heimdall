@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">password-validation-widget</string>
+  <string name="app_name">heimdall</string>
   <string name="hint_password">Password</string>
   <string name="password_must_include">Password must include:</string>
 </resources>

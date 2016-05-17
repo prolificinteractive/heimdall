@@ -1,4 +1,4 @@
-package com.prolificinteractive.passwordvalidationwidget;
+package com.prolificinteractive.heimdall;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,10 +28,7 @@ public class ValidationCheck implements Parcelable {
 
     ValidationCheck that = (ValidationCheck) o;
 
-    if (!regexPattern.equals(that.regexPattern)) {
-      return false;
-    }
-    return title.equals(that.title);
+    return regexPattern.equals(that.regexPattern) && title.equals(that.title);
   }
 
   @Override public int hashCode() {
