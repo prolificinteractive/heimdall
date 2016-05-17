@@ -1,4 +1,4 @@
-package com.prolificinteractive.passwordvalidationwidget;
+package com.prolificinteractive.heimdall;
 
 import org.junit.Test;
 

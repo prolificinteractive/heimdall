@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <declare-styleable name="PasswordValidationView">
+    <attr format="reference"
+        name="pvv_editTextId"/>
+    <attr format="string"
+        name="pvv_headerText"/>
+    <attr format="reference"
+        name="pvv_itemDrawableNoMatch"/>
+    <attr format="reference"
+        name="pvv_itemDrawableMatch"/>
+    <attr format="reference"
+        name="pvv_headerTextAppearance"/>
+    <attr format="reference"
+        name="pvv_itemTextAppearance"/>
+  </declare-styleable>
 </resources>

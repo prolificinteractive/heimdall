@@ -1,5 +1,7 @@
-package com.prolificinteractive.passwordvalidationwidget;
+package com.prolificinteractive.heimdall;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,20 @@ public class ValidationChecksAdapter
 
   private final List<ValidationCheck> items = new ArrayList<>();
 
+  private final int itemTextAppearance;
+  private final Drawable itemDrawableMatch;
+  private final Drawable itemDrawableNoMatch;
+
+  public ValidationChecksAdapter(
+      final int itemTextAppearance,
+      final Drawable itemDrawableMatch,
+      final Drawable itemDrawableNoMatch) {
+
+    this.itemTextAppearance = itemTextAppearance;
+    this.itemDrawableMatch = itemDrawableMatch;
+    this.itemDrawableNoMatch = itemDrawableNoMatch;
+  }
+
   @Override
   public ValidationChecksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     return new ViewHolder(
@@ -25,9 +41,18 @@ public class ValidationChecksAdapter
   @Override
   public void onBindViewHolder(ValidationChecksAdapter.ViewHolder viewHolder, int position) {
     final ValidationCheck item = items.get(position);
-    viewHolder.textView.setText(item.title);
 
-    viewHolder.textView.setAlpha(item.isMatched ? 1.0f : .5f);
+    viewHolder.textView.setText(item.title);
+    if (itemDrawableMatch != null && itemDrawableNoMatch != null) {
+      viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
+          item.isMatched ? itemDrawableMatch : itemDrawableNoMatch, null, null, null);
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      viewHolder.textView.setTextAppearance(itemTextAppearance);
+    } else {
+      viewHolder.textView.setTextAppearance(viewHolder.textView.getContext(), itemTextAppearance);
+    }
+    viewHolder.textView.setSelected(item.isMatched);
   }
 
   @Override

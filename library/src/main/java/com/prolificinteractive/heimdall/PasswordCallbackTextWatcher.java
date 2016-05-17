@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.prolificinteractive.passwordvalidationwidget;
+package com.prolificinteractive.heimdall;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,9 +24,9 @@ import java.util.List;
 
 /**
  * A {@link android.text.TextWatcher} that calls the matching
- * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.CallbackForPattern}
+ * {@link com.prolificinteractive.heimdall.PasswordCallbackTextWatcher.CallbackForPattern}
  * when the text at the selectionStart of the {@link android.widget.EditText} matches one
- * of the {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.PatternCallback}s
+ * of the {@link com.prolificinteractive.heimdall.PasswordCallbackTextWatcher.PatternCallback}s
  */
 public class PasswordCallbackTextWatcher implements TextWatcher {
 
@@ -37,7 +37,7 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
   private List<PatternCallback> patternCallbacks = new ArrayList<>();
 
   /**
-   * Create a new {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher}
+   * Create a new {@link com.prolificinteractive.heimdall.PasswordCallbackTextWatcher}
    * and associate it with the given {@link android.widget.EditText}. You must
    * {@link android.widget.EditText#addTextChangedListener} the returned object to the
    * {@link android.widget.EditText}.
@@ -48,7 +48,7 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
   }
 
   /**
-   * Add the {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher}
+   * Add the {@link com.prolificinteractive.heimdall.PasswordCallbackTextWatcher}
    * to
    * the internal list.
    *
@@ -68,14 +68,16 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
   }
 
   @Override public void afterTextChanged(Editable s) {
+    boolean allMatch = true;
     for (PatternCallback patternCallback : patternCallbacks) {
       if (s.toString().matches(patternCallback.check.regexPattern.pattern())) {
         patternCallback.callback.onMatch(patternCallback.check);
       } else {
         patternCallback.callback.noMatch(patternCallback.check);
+        allMatch = false;
       }
     }
-    validationCallback.onChecksCompleted();
+    validationCallback.onChecksCompleted(allMatch);
   }
 
   /**
@@ -90,7 +92,7 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
 
   /**
    * Associate a {@link java.util.regex.Pattern} with a
-   * {@link com.prolificinteractive.passwordvalidationwidget.PasswordCallbackTextWatcher.CallbackForPattern}.
+   * {@link com.prolificinteractive.heimdall.PasswordCallbackTextWatcher.CallbackForPattern}.
    */
   public static class PatternCallback {
     public ValidationCheck check;
@@ -103,6 +105,6 @@ public class PasswordCallbackTextWatcher implements TextWatcher {
   }
 
   public interface ValidationCallback {
-    void onChecksCompleted();
+    void onChecksCompleted(boolean allMatch);
   }
 }

@@ -4,7 +4,6 @@
     android:id="@+id/validation_item_title_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableLeft="@drawable/ic_check_black_24dp"
     android:drawablePadding="8dp"
     android:gravity="center_vertical"
     android:padding="4dp"

@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <style name="TextAppearance.PasswordValidationView.Header"
+      parent="android:TextAppearance.DeviceDefault.Small">
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="TextAppearance.PasswordValidationView.Item"
+      parent="android:TextAppearance.DeviceDefault.Small">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">#222</item>
+  </style>
 </resources>

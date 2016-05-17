@@ -1,12 +1,18 @@
-package com.prolificinteractive.passwordvalidationwidget.sample;
+package com.prolificinteractive.heimdall.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import com.prolificinteractive.passwordvalidationwidget.PasswordValidationView;
-import com.prolificinteractive.passwordvalidationwidget.ValidationCheck;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.prolificinteractive.heimdall.PasswordValidationView;
+import com.prolificinteractive.heimdall.ValidationCheck;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PasswordValidationView.Callback {
+
+  private EditText passwordText;
+  private PasswordValidationView passwordValidationView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +21,17 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    PasswordValidationView passwordValidationView =
+    passwordText = (EditText) findViewById(R.id.password_text);
+    passwordValidationView =
         (PasswordValidationView) findViewById(R.id.password_validation_view);
-    passwordValidationView.setupValidation(
+
+    passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+      @Override public void onFocusChange(View v, boolean hasFocus) {
+        passwordValidationView.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+      }
+    });
+
+    passwordValidationView.setupValidation(this,
         new ValidationCheck(
             PasswordRegexes.AT_LEAST_8_CHARACTERS,
             "Minimum 8 characters."),
@@ -34,5 +48,11 @@ public class MainActivity extends AppCompatActivity {
             PasswordRegexes.AT_LEAST_ONE_UPPER_CASE,
             "At least one upper case letter.")
     );
+  }
+
+  @Override public void onChecksCompleted(boolean allChecksMatch) {
+    if (allChecksMatch) {
+      Toast.makeText(this, "ALL PASS!", Toast.LENGTH_SHORT).show();
+    }
   }
 }
