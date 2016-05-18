@@ -70,7 +70,7 @@ Would you like to contribute? Fork us and send a pull request! Be sure to checko
 
 ## License
 
-Heimdall is Copyright (c) 2016 Prolific Interactive. It may be redistributed under the terms specified in the [LICENSE] file.
+The Heimdall library is Copyright (c) 2016 Prolific Interactive. It may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: /LICENSE
 
@@ -80,4 +80,4 @@ Heimdall is Copyright (c) 2016 Prolific Interactive. It may be redistributed und
 
 Heimdall is maintained and funded by Prolific Interactive.
 
-Heimdall is a copyright of Marvel.
+Heimdall (name and character) is a copyright of Marvel.
