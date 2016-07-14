@@ -143,7 +143,9 @@ public class PasswordValidationView extends LinearLayout
   @Override public void onChecksCompleted(boolean allChecksMatch) {
     adapter.notifyDataSetChanged();
 
-    callback.onChecksCompleted(allChecksMatch);
+    if (callback != null) {
+      callback.onChecksCompleted(allChecksMatch);
+    }
   }
 
   public interface Callback {
