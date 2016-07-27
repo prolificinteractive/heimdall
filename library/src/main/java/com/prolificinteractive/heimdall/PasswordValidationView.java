@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -108,7 +108,8 @@ public class PasswordValidationView extends LinearLayout
     );
 
     recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    recyclerView.setLayoutManager(
+        new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
     // initialize our callback listener for password field
     PasswordCallbackTextWatcher passwordCallbackTextWatcher =
