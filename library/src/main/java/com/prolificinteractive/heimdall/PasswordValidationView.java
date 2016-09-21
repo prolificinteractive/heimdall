@@ -20,6 +20,7 @@ import java.util.List;
 public class PasswordValidationView extends LinearLayout
     implements CallbackForPattern, ValidationCallback {
 
+  private final List<ValidationCheck> items = new ArrayList<>();
   // attribute fields
   private String headerTextString;
   private int headerTextAppearance;
@@ -27,11 +28,8 @@ public class PasswordValidationView extends LinearLayout
   private Drawable itemDrawableNoMatch;
   private int itemTextAppearance;
   private int passwordEditTextId;
-
   private Callback callback;
   private ValidationChecksAdapter adapter;
-
-  private final List<ValidationCheck> items = new ArrayList<>();
 
   public PasswordValidationView(Context context) {
     this(context, null);
@@ -47,7 +45,10 @@ public class PasswordValidationView extends LinearLayout
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public PasswordValidationView(Context context, AttributeSet attrs, int defStyleAttr,
+  public PasswordValidationView(
+      Context context,
+      AttributeSet attrs,
+      int defStyleAttr,
       int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     setupAttributes(attrs);
@@ -58,27 +59,30 @@ public class PasswordValidationView extends LinearLayout
     init();
   }
 
-  private void setupAttributes(AttributeSet attrs) {
-    final TypedArray a = getContext().getTheme()
-        .obtainStyledAttributes(attrs, R.styleable.PasswordValidationView, 0, 0);
-    try {
-      passwordEditTextId = a.getResourceId(R.styleable.PasswordValidationView_pvv_editTextId, -1);
-      headerTextString = a.getString(R.styleable.PasswordValidationView_pvv_headerText);
-      itemDrawableMatch =
-          a.getDrawable(R.styleable.PasswordValidationView_pvv_itemDrawableMatch);
-      itemDrawableNoMatch =
-          a.getDrawable(R.styleable.PasswordValidationView_pvv_itemDrawableNoMatch);
-      itemTextAppearance = a.getResourceId(
-          R.styleable.PasswordValidationView_pvv_itemTextAppearance,
-          R.style.TextAppearance_PasswordValidationView_Header);
-      headerTextAppearance = a.getResourceId(
-          R.styleable.PasswordValidationView_pvv_headerTextAppearance,
-          R.style.TextAppearance_PasswordValidationView_Header);
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      a.recycle();
+  @Override public void onMatch(ValidationCheck check) {
+    adapter.setMatch(check);
+  }
+
+  @Override public void noMatch(ValidationCheck check) {
+    adapter.setNoMatch(check);
+  }
+
+  @Override public void onChecksCompleted(boolean allChecksMatch) {
+    adapter.notifyDataSetChanged();
+
+    if (callback != null) {
+      callback.onChecksCompleted(allChecksMatch);
     }
+  }
+
+  public void setupValidation(Callback callback, ValidationCheck... fields) {
+    if (!items.isEmpty()) {
+      throw new IllegalStateException("Already initialized");
+    }
+
+    this.callback = callback;
+
+    Collections.addAll(items, fields);
   }
 
   /**
@@ -108,8 +112,11 @@ public class PasswordValidationView extends LinearLayout
     );
 
     recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(
-        new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+      @Override public boolean canScrollVertically() {
+        return false;
+      }
+    });
 
     // initialize our callback listener for password field
     PasswordCallbackTextWatcher passwordCallbackTextWatcher =
@@ -123,29 +130,28 @@ public class PasswordValidationView extends LinearLayout
     passwordText.addTextChangedListener(passwordCallbackTextWatcher);
   }
 
-  public void setupValidation(Callback callback, ValidationCheck... fields) {
-    if (!items.isEmpty()) {
-      throw new IllegalStateException("Already initialized");
-    }
-
-    this.callback = callback;
-
-    Collections.addAll(items, fields);
-  }
-
-  @Override public void onMatch(ValidationCheck check) {
-    adapter.setMatch(check);
-  }
-
-  @Override public void noMatch(ValidationCheck check) {
-    adapter.setNoMatch(check);
-  }
-
-  @Override public void onChecksCompleted(boolean allChecksMatch) {
-    adapter.notifyDataSetChanged();
-
-    if (callback != null) {
-      callback.onChecksCompleted(allChecksMatch);
+  private void setupAttributes(AttributeSet attrs) {
+    final TypedArray a = getContext().getTheme()
+        .obtainStyledAttributes(attrs, R.styleable.PasswordValidationView, 0, 0);
+    try {
+      passwordEditTextId = a.getResourceId(R.styleable.PasswordValidationView_pvv_editTextId, -1);
+      headerTextString = a.getString(R.styleable.PasswordValidationView_pvv_headerText);
+      itemDrawableMatch =
+          a.getDrawable(R.styleable.PasswordValidationView_pvv_itemDrawableMatch);
+      itemDrawableNoMatch =
+          a.getDrawable(R.styleable.PasswordValidationView_pvv_itemDrawableNoMatch);
+      itemTextAppearance = a.getResourceId(
+          R.styleable.PasswordValidationView_pvv_itemTextAppearance,
+          R.style.TextAppearance_PasswordValidationView_Header
+      );
+      headerTextAppearance = a.getResourceId(
+          R.styleable.PasswordValidationView_pvv_headerTextAppearance,
+          R.style.TextAppearance_PasswordValidationView_Header
+      );
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      a.recycle();
     }
   }
 
