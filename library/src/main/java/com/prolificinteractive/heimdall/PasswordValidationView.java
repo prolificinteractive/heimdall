@@ -54,7 +54,6 @@ public class PasswordValidationView extends LinearLayout
     setupAttributes(attrs);
   }
 
-
   @Override public void onMatch(ValidationCheck check) {
     adapter.setMatch(check);
   }
