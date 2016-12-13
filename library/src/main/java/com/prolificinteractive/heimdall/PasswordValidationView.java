@@ -54,11 +54,6 @@ public class PasswordValidationView extends LinearLayout
     setupAttributes(attrs);
   }
 
-  @Override protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    init();
-  }
-
   @Override public void onMatch(ValidationCheck check) {
     adapter.setMatch(check);
   }
@@ -83,6 +78,8 @@ public class PasswordValidationView extends LinearLayout
     this.callback = callback;
 
     Collections.addAll(items, fields);
+
+    init();
   }
 
   /**
