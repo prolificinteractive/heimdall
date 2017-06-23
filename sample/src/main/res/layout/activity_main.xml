@@ -55,6 +55,7 @@
           app:pvv_editTextId="@id/password_text"
           app:pvv_headerText="@string/password_must_include"
           app:pvv_headerTextAppearance="@style/CustomHeaderTextAppearance"
+          app:pvv_headerTextVisiblity="visible"
           app:pvv_itemDrawableMatch="@drawable/ic_check_black_24dp"
           app:pvv_itemDrawableNoMatch="@drawable/ic_close_black_24dp"
           app:pvv_itemTextAppearance="@style/CustomItemTextAppearance"

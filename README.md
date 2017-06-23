@@ -45,6 +45,7 @@ Example:
         app:pvv_itemDrawableMatch="@drawable/ic_check_black_24dp"
         app:pvv_itemDrawableNoMatch="@drawable/ic_close_black_24dp"
         app:pvv_itemTextAppearance="@style/CustomItemTextAppearance"
+        app:pvv_headerTextVisiblity="visible"
         >
     </com.prolificinteractive.heimdall.PasswordValidationView>
 ```
@@ -60,6 +61,7 @@ Currently supported XML attributes:
 - `pvv_itemDrawableMatch` Set the icon when the entered text matches the validation check.
 - `pvv_itemDrawableNoMatch` Set the icon when the entered text does NOT match the validation check (Default state).
 - `pvv_itemTextAppearance` Set items text appearance (You can set your selected/unselected state here).
+- `pvv_headerTextVisiblity` Set the visiblity of the header (visible, invisible, gone)
 
 Make sure to check sample for a more concrete example.
 
