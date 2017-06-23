@@ -19,5 +19,7 @@
       <enum name="invisible" value="4"/>
       <enum name="gone" value="8"/>
     </attr>
+    <attr format="integer"
+        name="pvv_noOfColumns"/>
   </declare-styleable>
 </resources>
