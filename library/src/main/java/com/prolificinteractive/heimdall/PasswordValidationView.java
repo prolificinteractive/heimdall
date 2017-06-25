@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class PasswordValidationView extends LinearLayout
   private Drawable itemDrawableNoMatch;
   private int itemTextAppearance;
   private int passwordEditTextId;
+  private int headerVisibility = View.VISIBLE;
   private Callback callback;
   private ValidationChecksAdapter adapter;
 
@@ -92,6 +94,8 @@ public class PasswordValidationView extends LinearLayout
     final TextView headerText = new TextView(getContext());
     final RecyclerView recyclerView = new RecyclerView(getContext());
 
+    headerText.setVisibility(headerVisibility);
+
     headerText.setText(headerTextString);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       headerText.setTextAppearance(headerTextAppearance);
@@ -144,6 +148,10 @@ public class PasswordValidationView extends LinearLayout
       headerTextAppearance = a.getResourceId(
           R.styleable.PasswordValidationView_pvv_headerTextAppearance,
           R.style.TextAppearance_PasswordValidationView_Header
+      );
+      headerVisibility = a.getInt(
+          R.styleable.PasswordValidationView_pvv_headerTextVisiblity,
+          View.VISIBLE
       );
     } catch (Exception e) {
       e.printStackTrace();

@@ -13,5 +13,11 @@
         name="pvv_headerTextAppearance"/>
     <attr format="reference"
         name="pvv_itemTextAppearance"/>
+    <attr format="enum"
+        name="pvv_headerTextVisiblity">
+      <enum name="visible" value="0"/>
+      <enum name="invisible" value="4"/>
+      <enum name="gone" value="8"/>
+    </attr>
   </declare-styleable>
 </resources>
