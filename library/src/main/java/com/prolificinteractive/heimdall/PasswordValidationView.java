@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -20,6 +20,8 @@ import java.util.List;
 
 public class PasswordValidationView extends LinearLayout
     implements CallbackForPattern, ValidationCallback {
+  private static final int MAX_COLUMN_COUNT = 5;
+  private static final int MIN_COLUMN_COUNT = 1;
 
   private final List<ValidationCheck> items = new ArrayList<>();
   // attribute fields
@@ -32,6 +34,7 @@ public class PasswordValidationView extends LinearLayout
   private int headerVisibility = View.VISIBLE;
   private Callback callback;
   private ValidationChecksAdapter adapter;
+  private int noOfColumns = MIN_COLUMN_COUNT;
 
   public PasswordValidationView(Context context) {
     this(context, null);
@@ -113,7 +116,7 @@ public class PasswordValidationView extends LinearLayout
     );
 
     recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), noOfColumns) {
       @Override public boolean canScrollVertically() {
         return false;
       }
@@ -153,11 +156,30 @@ public class PasswordValidationView extends LinearLayout
           R.styleable.PasswordValidationView_pvv_headerTextVisiblity,
           View.VISIBLE
       );
+      noOfColumns = a.getInt(R.styleable.PasswordValidationView_pvv_noOfColumns, MIN_COLUMN_COUNT);
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
       a.recycle();
     }
+
+    if (noOfColumns > MAX_COLUMN_COUNT || noOfColumns < MIN_COLUMN_COUNT) {
+      throw new IllegalArgumentException(
+          getResources().getString(
+              R.string.column_exception_error_msg,
+              MIN_COLUMN_COUNT,
+              MAX_COLUMN_COUNT
+          )
+      );
+    }
+  }
+
+  public int getMinColumnCount() {
+    return MIN_COLUMN_COUNT;
+  }
+
+  public int getMaxColumnCount() {
+    return MAX_COLUMN_COUNT;
   }
 
   public interface Callback {

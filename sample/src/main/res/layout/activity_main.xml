@@ -59,6 +59,7 @@
           app:pvv_itemDrawableMatch="@drawable/ic_check_black_24dp"
           app:pvv_itemDrawableNoMatch="@drawable/ic_close_black_24dp"
           app:pvv_itemTextAppearance="@style/CustomItemTextAppearance"
+          app:pvv_noOfColumns="2"
           >
       </com.prolificinteractive.heimdall.PasswordValidationView>
       <Button

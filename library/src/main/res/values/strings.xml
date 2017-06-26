@@ -2,4 +2,7 @@
   <string name="app_name">heimdall</string>
   <string name="hint_password">Password</string>
   <string name="password_must_include">Password must include:</string>
+  <string name="column_exception_error_msg">
+    The number of columns supported by PasswordValidationView is between %1$d and %2$d. Limit can be checked with PasswordValidationView#getMaxColumnCount()"
+  </string>
 </resources>
