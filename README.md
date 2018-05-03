@@ -1,7 +1,7 @@
 Heimdall
 ========
 
-![JitPack](https://img.shields.io/jitpack/v/jitpack/maven-simple.svg?style=for-the-badge)
+[![](https://jitpack.io/v/prolificinteractive/heimdall.svg)](https://jitpack.io/#prolificinteractive/heimdall)
 
 A collection of useful views/widgets that guard your app.
 
