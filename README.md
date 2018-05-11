@@ -1,3 +1,5 @@
+<img src="/images/bg_heimdall.png"/>
+
 Heimdall
 ========
 
